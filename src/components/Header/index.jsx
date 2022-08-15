@@ -1,44 +1,55 @@
-import React from 'react';
-import Button from '@mui/material/Button';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import styles from './Header.module.scss';
-import Container from '@mui/material/Container';
+import { Container, Button, Box, Typography } from "@mui/material";
+
+import { styles } from "./styles";
 
 export const Header = () => {
-  const isAuth = false;
+  const isAuth = true;
 
   const onClickLogout = () => {};
 
   return (
-    <div className={styles.root}>
+    <Box sx={styles.header}>
       <Container maxWidth="lg">
-        <div className={styles.inner}>
-          <a className={styles.logo} href="/">
-            <div>ARCHAKOV BLOG</div>
-          </a>
-          <div className={styles.buttons}>
+        <Box sx={styles.headerInner}>
+          <Box sx={styles.headerLogo}>
+            <Link to="/">
+              <Typography>My Blog</Typography>
+            </Link>
+          </Box>
+          <Box>
             {isAuth ? (
               <>
-                <a href="/posts/create">
-                  <Button variant="contained">Написать статью</Button>
-                </a>
-                <Button onClick={onClickLogout} variant="contained" color="error">
+                <Link to="/posts/create">
+                  <Button variant="contained" sx={styles.headerButton}>
+                    Написать статью
+                  </Button>
+                </Link>
+                <Button
+                  onClick={onClickLogout}
+                  variant="contained"
+                  color="error"
+                >
                   Выйти
                 </Button>
               </>
             ) : (
               <>
-                <a href="/login">
-                  <Button variant="outlined">Войти</Button>
-                </a>
-                <a href="/register">
+                <Link to="/login">
+                  <Button variant="outlined" sx={styles.headerButton}>
+                    Войти
+                  </Button>
+                </Link>
+                <Link to="/register">
                   <Button variant="contained">Создать аккаунт</Button>
-                </a>
+                </Link>
               </>
             )}
-          </div>
-        </div>
+          </Box>
+        </Box>
       </Container>
-    </div>
+    </Box>
   );
 };

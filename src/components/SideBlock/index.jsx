@@ -1,15 +1,16 @@
 import React from "react";
-import styles from "./SideBlock.module.scss";
-import Typography from "@mui/material/Typography";
-import Paper from "@mui/material/Paper";
+
+import { Typography, Box } from "@mui/material";
+
+import { styles } from "./styles";
 
 export const SideBlock = ({ title, children }) => {
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography variant="h6" classes={{ root: styles.title }}>
+    <Box sx={styles.sideBlock}>
+      <Typography variant="h6" sx={styles.sideBlockTitle}>
         {title}
       </Typography>
       {children}
-    </Paper>
+    </Box>
   );
 };

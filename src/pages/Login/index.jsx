@@ -1,28 +1,26 @@
 import React from "react";
-import Typography from "@mui/material/Typography";
-import TextField from "@mui/material/TextField";
-import Paper from "@mui/material/Paper";
-import Button from "@mui/material/Button";
 
-import styles from "./Login.module.scss";
+import { Typography, TextField, Button, Box } from "@mui/material";
+
+import { styles } from "./styles";
 
 export const Login = () => {
   return (
-    <Paper classes={{ root: styles.root }}>
-      <Typography classes={{ root: styles.title }} variant="h5">
-        Вход в аккаунт
+    <Box sx={styles.login}>
+      <Typography sx={styles.loginTitle} variant="h5">
+        Login
       </Typography>
       <TextField
-        className={styles.field}
-        label="E-Mail"
+        sx={styles.loginTextField}
+        label="Email"
         error
-        helperText="Неверно указана почта"
+        helperText="Incorrect email"
         fullWidth
       />
-      <TextField className={styles.field} label="Пароль" fullWidth />
+      <TextField sx={styles.loginTextField} label="Pass" fullWidth />
       <Button size="large" variant="contained" fullWidth>
-        Войти
+        Sign in
       </Button>
-    </Paper>
+    </Box>
   );
 };

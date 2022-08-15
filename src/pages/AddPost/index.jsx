@@ -1,15 +1,16 @@
-import React from 'react';
-import TextField from '@mui/material/TextField';
-import Paper from '@mui/material/Paper';
-import Button from '@mui/material/Button';
-import SimpleMDE from 'react-simplemde-editor';
+import React from "react";
+import { Link } from "react-router-dom";
 
-import 'easymde/dist/easymde.min.css';
-import styles from './AddPost.module.scss';
+import { TextField, Button, Box } from "@mui/material";
+
+import SimpleMDE from "react-simplemde-editor";
+import "easymde/dist/easymde.min.css";
+
+import { styles } from "./styles";
 
 export const AddPost = () => {
-  const imageUrl = '';
-  const [value, setValue] = React.useState('');
+  const imageUrl = "";
+  const [value, setValue] = React.useState("");
 
   const handleChangeFile = () => {};
 
@@ -22,50 +23,66 @@ export const AddPost = () => {
   const options = React.useMemo(
     () => ({
       spellChecker: false,
-      maxHeight: '400px',
+      maxHeight: "400px",
       autofocus: true,
-      placeholder: 'Введите текст...',
+      placeholder: "Введите текст...",
       status: false,
       autosave: {
         enabled: true,
         delay: 1000,
       },
     }),
-    [],
+    []
   );
 
   return (
-    <Paper style={{ padding: 30 }}>
+    <Box sx={styles.addPost}>
       <Button variant="outlined" size="large">
-        Загрузить превью
+        Upload preview
       </Button>
       <input type="file" onChange={handleChangeFile} hidden />
       {imageUrl && (
         <Button variant="contained" color="error" onClick={onClickRemoveImage}>
-          Удалить
+          Delete
         </Button>
       )}
       {imageUrl && (
-        <img className={styles.image} src={`http://localhost:4444${imageUrl}`} alt="Uploaded" />
+        <img
+          className={styles.image}
+          src={`http://localhost:4444${imageUrl}`}
+          alt="Uploaded"
+        />
       )}
       <br />
       <br />
       <TextField
-        classes={{ root: styles.title }}
+        sx={styles.addPostTitleInput}
         variant="standard"
-        placeholder="Заголовок статьи..."
+        placeholder="Post title..."
         fullWidth
       />
-      <TextField classes={{ root: styles.tags }} variant="standard" placeholder="Тэги" fullWidth />
-      <SimpleMDE className={styles.editor} value={value} onChange={onChange} options={options} />
-      <div className={styles.buttons}>
-        <Button size="large" variant="contained">
-          Опубликовать
+      <TextField
+        sx={styles.addPostTagsInput}
+        variant="standard"
+        placeholder="Tags"
+        fullWidth
+      />
+      <SimpleMDE
+        className={styles.editor}
+        value={value}
+        onChange={onChange}
+        options={options}
+      />
+      <Box sx={styles.addPostButtonsWrapper}>
+        <Button size="large" variant="contained" sx={styles.addPostButton}>
+          Publish
         </Button>
-        <a href="/">
-          <Button size="large">Отмена</Button>
-        </a>
-      </div>
-    </Paper>
+        <Link to="/">
+          <Button size="large" sx={styles.addPostButton}>
+            Cancel
+          </Button>
+        </Link>
+      </Box>
+    </Box>
   );
 };
