@@ -1,9 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import clsx from "clsx";
 
 import { UserInfo } from "../UserInfo";
-import { PostSkeleton } from "./Skeleton";
+import { PostSkeleton } from "./PostSkeleton/Skeleton";
 
 import { Box, IconButton, List, ListItem, Typography } from "@mui/material";
 
@@ -12,8 +11,7 @@ import EditIcon from "@mui/icons-material/Edit";
 import EyeIcon from "@mui/icons-material/RemoveRedEyeOutlined";
 import CommentIcon from "@mui/icons-material/ChatBubbleOutlineOutlined";
 
-import styles from "./Post.module.scss";
-import { styles as style } from "./styles.js";
+import { makeStyles } from "./styles.js";
 
 export const Post = ({
   _id,
@@ -29,6 +27,7 @@ export const Post = ({
   isLoading,
   isEditable,
 }) => {
+  const styles = makeStyles(isFullPost);
   if (isLoading) {
     return <PostSkeleton />;
   }
@@ -36,9 +35,9 @@ export const Post = ({
   const onClickRemove = () => {};
 
   return (
-    <Box className={clsx(styles.root, { [styles.rootFull]: isFullPost })}>
+    <Box sx={styles.root.post}>
       {true && (
-        <Box className={styles.editButtons}>
+        <Box className="editButtons" sx={styles.root.postEditButtonsWrapper}>
           <Link to={`/posts/${_id}/edit`}>
             <IconButton color="primary">
               <EditIcon />
@@ -50,34 +49,33 @@ export const Post = ({
         </Box>
       )}
       {imageUrl && (
-        <img
-          className={clsx(styles.image, { [styles.imageFull]: isFullPost })}
+        <Box
+          component="img"
+          sx={styles.root.postImg}
           src={imageUrl}
           alt={title}
         />
       )}
-      <Box className={styles.wrapper}>
+      <Box sx={styles.root.postWrapper}>
         <UserInfo {...user} additionalText={createdAt} />
-        <Box className={styles.indention}>
-          <Typography
-            className={clsx(styles.title, { [styles.titleFull]: isFullPost })}
-          >
+        <Box sx={styles.root.postIndention}>
+          <Typography sx={styles.root.postTitle}>
             {isFullPost ? title : <Link to={`/posts/${_id}`}>{title}</Link>}
           </Typography>
-          <List className={styles.tags}>
+          <List sx={styles.root.postTags}>
             {tags.map((name) => (
-              <ListItem key={name}>
+              <ListItem key={name} sx={styles.root.postTagItem}>
                 <Link to={`/tag/${name}`}>#{name}</Link>
               </ListItem>
             ))}
           </List>
-          {children && <Box className={styles.content}>{children}</Box>}
-          <List className={styles.postDetails}>
-            <ListItem>
+          {children && <Box sx={styles.root.postContent}>{children}</Box>}
+          <List sx={styles.root.postDetails}>
+            <ListItem sx={styles.root.postDetailsItem}>
               <EyeIcon />
               <Box component="span">{viewsCount}</Box>
             </ListItem>
-            <ListItem>
+            <ListItem sx={styles.root.postDetailsItem}>
               <CommentIcon />
               <Box component="span">{commentsCount}</Box>
             </ListItem>
